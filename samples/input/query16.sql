@@ -1,0 +1,1 @@
+SELECT * FROM  Reserves, Boats, Sailors WHERE Reserves.G = Boats.F AND Sailors.A != Boats.E AND Boats.E != Boats.F AND Sailors.B < Sailors.C AND Boats.E <= Boats.F AND Sailors.B < Sailors.C AND 100 < Sailors.B AND Reserves.H >= Reserves.G

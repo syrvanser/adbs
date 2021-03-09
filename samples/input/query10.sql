@@ -1,0 +1,1 @@
+SELECT Boats.D, Reserves.H FROM  Reserves, Boats WHERE Boats.D > Boats.E AND Reserves.H != 104 AND Boats.D > Reserves.H

@@ -1,0 +1,1 @@
+SELECT * FROM Sailors WHERE Sailors.B > 100 AND Sailors.B != Sailors.C AND Sailors.B <= 400 AND Sailors.A < 10 AND Sailors.A >= -1
