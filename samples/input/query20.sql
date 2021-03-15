@@ -1,0 +1,1 @@
+SELECT * FROM EmptyTable ORDER BY EmptyTable.empty1, EmptyTable.empty2

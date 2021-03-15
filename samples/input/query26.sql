@@ -1,0 +1,1 @@
+SELECT DISTINCT E.A, E.B, E.C FROM Duplicates E ORDER BY E.A;

@@ -9,7 +9,6 @@ import java.io.PrintStream;
 
 /**
  * Lightweight in-memory database system
- * TODO: delete super calls in expression parsers?
  */
 public class LightDB {
 
@@ -31,11 +30,9 @@ public class LightDB {
 	public static void parse(String inputFilename, String outputFilename) {
 		try {
 			Statement statement = CCJSqlParserUtil.parse(new FileReader(inputFilename));
-//            Statement statement = CCJSqlParserUtil.parse("SELECT * FROM Boats");
 			if (statement != null) {
 				System.out.println("Read statement: " + statement);
 				Select select = (Select) statement;
-				//System.out.println("Select body is " + select.getSelectBody());
 
 				PrintStream printStream;
 				if (outputFilename.equals("System.out")){
@@ -44,6 +41,8 @@ public class LightDB {
 					printStream = new PrintStream(outputFilename);
 				}
 				QueryPlanExecutor.getInstance().executeStatement(select).dump(printStream);
+				DatabaseCatalog.getInstance().reset();
+				QueryPlanExecutor.getInstance().reset();
 			}
 		} catch (Exception e) {
 			System.err.println("Exception occurred during parsing");

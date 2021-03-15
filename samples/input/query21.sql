@@ -1,0 +1,1 @@
+SELECT * FROM Reserves as R, Boats as B, Sailors as S, Extra WHERE B.F = R.G AND B.E != S.A AND S.C > R.H AND R.H > S.B AND R.G = Extra.E AND Extra.E >= B.E ORDER BY B.F, Extra.E, R.G

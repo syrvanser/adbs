@@ -3,6 +3,7 @@ package ed.inf.adbs.lightdb;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import org.junit.After;
 import org.junit.Test;
 
 import javax.xml.stream.FactoryConfigurationError;
@@ -50,12 +51,10 @@ public class LightDBTest {
 		}
 	}
 
-	/**
-	 * Rigorous Test :-)
-	 */
-	@Test
-	public void shouldAnswerWithTrue() {
-		assertTrue(true);
+	@After
+	public void clear(){
+		DatabaseCatalog.getInstance().reset();
+		QueryPlanExecutor.getInstance().reset();
 	}
 
 	@Test
@@ -87,16 +86,16 @@ public class LightDBTest {
 	public void query6() {
 		testQuery(6, false);
 	}
-//
-//	@Test
-//	public void query7() throws FileNotFoundException {
-//		testQuery(7);
-//	}
-//
-//	@Test
-//	public void query8() throws FileNotFoundException {
-//		testQuery(8);
-//	}
+
+	@Test
+	public void query7() {
+		testQuery(7, true);
+	}
+
+	@Test
+	public void query8() {
+		testQuery(8, true);
+	}
 
 	@Test
 	public void query9() {
@@ -147,4 +146,45 @@ public class LightDBTest {
 	public void query18() {
 		testQuery(18, false);
 	}
+
+	@Test
+	public void query19() {
+		testQuery(19, false);
+	}
+
+	@Test
+	public void query20() {
+		testQuery(20, true);
+	}
+
+	@Test
+	public void query21() {
+		testQuery(21, true);
+	}
+
+	@Test
+	public void query22() {
+		testQuery(22, true);
+	}
+
+	@Test
+	public void query23() {
+		testQuery(23, false);
+	}
+
+	@Test
+	public void query24() {
+		testQuery(24, true);
+	}
+
+	@Test
+	public void query25() {
+		testQuery(25, true);
+	}
+
+	@Test
+	public void query26() {
+		testQuery(26, true);
+	}
+
 }

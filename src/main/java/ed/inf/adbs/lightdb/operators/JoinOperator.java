@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
-public class JoinOperator extends Operator{
+public class JoinOperator extends Operator {
     final protected Operator leftChild, rightChild;
     final protected Expression expression;
     protected Tuple currentLeftTuple;
 
-    public JoinOperator (Operator leftChild, Operator rightChild, Expression expression){
+    public JoinOperator(Operator leftChild, Operator rightChild, Expression expression) {
         super(leftChild.getTableName() + "_join_" + rightChild.getTableName());
         this.leftChild = leftChild;
         this.rightChild = rightChild;
@@ -25,19 +25,17 @@ public class JoinOperator extends Operator{
     @Override
     public Tuple getNextTuple() {
         Tuple currentRightTuple;
-        while(currentLeftTuple != null){
-            while((currentRightTuple = rightChild.getNextTuple()) != null){
+        while (currentLeftTuple != null) {
+            while ((currentRightTuple = rightChild.getNextTuple()) != null) {
                 Tuple mergedTuple = new Tuple(Stream.concat(currentLeftTuple.toList().stream(), currentRightTuple.toList().stream())
                         .collect(Collectors.toList()));
                 CustomExpressionParser parser = new CustomExpressionParser(mergedTuple, getTableName());
-                if (expression == null){
+                if (expression == null) {
                     return mergedTuple;
                 }
-//                System.out.println(expression);
-//                System.out.println(mergedTuple);
                 expression.accept(parser);
 
-                if (parser.getResult()){
+                if (parser.getResult()) {
                     return mergedTuple;
                 }
             }

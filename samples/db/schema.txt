@@ -3,3 +3,4 @@ Boats D E F
 Reserves G H
 EmptyTable empty1 empty2
 Extra E
+Duplicates A B C

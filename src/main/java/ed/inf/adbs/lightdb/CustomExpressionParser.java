@@ -14,7 +14,7 @@ public class CustomExpressionParser extends ExpressionDeParser {
     final protected DatabaseCatalog databaseCatalog;
     final protected String tableName;
 
-    public CustomExpressionParser(Tuple tuple, String tableName){
+    public CustomExpressionParser(Tuple tuple, String tableName) {
         this.tuple = tuple;
         stack = new Stack<>();
         this.tableName = tableName;
@@ -47,7 +47,7 @@ public class CustomExpressionParser extends ExpressionDeParser {
         super.visit(notEqualsTo);
         long right = stack.pop();
         long left = stack.pop();
-        stack.push(left != right? 1L :0);
+        stack.push(left != right ? 1L : 0);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class CustomExpressionParser extends ExpressionDeParser {
         super.visit(equalsTo);
         long right = stack.pop();
         long left = stack.pop();
-        stack.push(left == right? 1L :0);
+        stack.push(left == right ? 1L : 0);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class CustomExpressionParser extends ExpressionDeParser {
         super.visit(greaterThan);
         long right = stack.pop();
         long left = stack.pop();
-        stack.push(left > right? 1L :0);
+        stack.push(left > right ? 1L : 0);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class CustomExpressionParser extends ExpressionDeParser {
         super.visit(greaterThanEquals);
         long right = stack.pop();
         long left = stack.pop();
-        stack.push(left >= right? 1L :0);
+        stack.push(left >= right ? 1L : 0);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class CustomExpressionParser extends ExpressionDeParser {
         super.visit(minorThan);
         long right = stack.pop();
         long left = stack.pop();
-        stack.push(left < right? 1L :0);
+        stack.push(left < right ? 1L : 0);
     }
 
     @Override
@@ -87,10 +87,10 @@ public class CustomExpressionParser extends ExpressionDeParser {
         super.visit(minorThanEquals);
         long right = stack.pop();
         long left = stack.pop();
-        stack.push(left <= right? 1L :0);
+        stack.push(left <= right ? 1L : 0);
     }
 
-    public boolean getResult(){
+    public boolean getResult() {
         if (stack.size() == 1) {
             long longResult = stack.pop();
             if (longResult == 0) {

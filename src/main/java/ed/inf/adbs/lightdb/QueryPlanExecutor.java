@@ -14,7 +14,7 @@ public class QueryPlanExecutor {
     private static QueryPlanExecutor INSTANCE;
     final protected DatabaseCatalog databaseCatalog = DatabaseCatalog.getInstance();
 
-    private QueryPlanExecutor(){
+    private QueryPlanExecutor() {
 
     }
 
@@ -25,17 +25,23 @@ public class QueryPlanExecutor {
         return INSTANCE;
     }
 
-    private String getTableName(Table table){
-        if (table.getAlias() != null){
+    public void reset() {
+        INSTANCE = new QueryPlanExecutor();
+    }
+
+    private String getTableName(Table table) {
+        if (table.getAlias() != null) {
             return table.getAlias().getName();
-        } else{
+        } else {
             return table.getName();
         }
     }
 
-    public Operator executeStatement(Select select){
+    public Operator executeStatement(Select select) {
+
         Operator root;
-        PlainSelect plainSelectBody = (PlainSelect)select.getSelectBody();
+        PlainSelect plainSelectBody = (PlainSelect) select.getSelectBody();
+
         String leftTableName = getTableName(((Table) plainSelectBody.getFromItem()));
         if (plainSelectBody.getFromItem().getAlias() != null) {
             databaseCatalog.addAlias(leftTableName, ((Table) plainSelectBody.getFromItem()).getName());
@@ -48,14 +54,14 @@ public class QueryPlanExecutor {
             }
         } else {
             List<String> items = plainSelectBody.getJoins().stream().map(Join::getRightItem).map(t -> getTableName((Table) t)).collect(Collectors.toList());
-            for (int i = 0; i < plainSelectBody.getJoins().size(); i++){
-                databaseCatalog.addAlias(getTableName((Table) plainSelectBody.getJoins().get(i).getRightItem()),((Table) plainSelectBody.getJoins().get(i).getRightItem()).getName());
+            for (int i = 0; i < plainSelectBody.getJoins().size(); i++) {
+                databaseCatalog.addAlias(getTableName((Table) plainSelectBody.getJoins().get(i).getRightItem()), ((Table) plainSelectBody.getJoins().get(i).getRightItem()).getName());
             }
 
             if (plainSelectBody.getWhere() == null) {
                 root = new ScanOperator(leftTableName);
                 for (Join join : plainSelectBody.getJoins()) {
-                    root = new JoinOperator(root, new ScanOperator(getTableName((Table)join.getRightItem())), null);
+                    root = new JoinOperator(root, new ScanOperator(getTableName((Table) join.getRightItem())), null);
                 }
             } else {
                 items.add(0, leftTableName);
@@ -65,7 +71,16 @@ public class QueryPlanExecutor {
             }
         }
         root = new ProjectOperator(root, plainSelectBody.getSelectItems());
+        if (plainSelectBody.getOrderByElements() != null) {
+            root = new SortOperator(root, plainSelectBody.getOrderByElements().stream().map(OrderByElement::getExpression).map(t -> ((Column) t)).collect(Collectors.toList()));
+        }
 
+        if (plainSelectBody.getDistinct() != null) {
+            if (plainSelectBody.getOrderByElements() == null) {
+                root = new SortOperator(root, null);
+            }
+            root = new DuplicateEliminationOperator(root);
+        }
         return root;
     }
 }

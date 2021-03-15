@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 
 import static java.lang.System.exit;
 
-public class ScanOperator extends Operator{
+public class ScanOperator extends Operator {
 
     private Scanner scan;
 
-    public ScanOperator(String tableName){
+    public ScanOperator(String tableName) {
         super(tableName);
         File tableFile = databaseCatalog.getFile(tableName);
         try {
@@ -32,7 +32,7 @@ public class ScanOperator extends Operator{
             String line = scan.nextLine();
             List<Long> record = Arrays.stream(line.split(",")).map(Long::valueOf).collect(Collectors.toList()); // convert csv string to List<Long>
             return new Tuple(record);
-        } else{
+        } else {
             return null;
         }
     }

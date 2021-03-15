@@ -20,9 +20,9 @@ public class CustomJoinExpressionParser extends ExpressionDeParser {
     final protected List<String> items;
     final protected Map<String, Integer> indexMapping = new HashMap<>();
 
-    public CustomJoinExpressionParser(List<String> items){
+    public CustomJoinExpressionParser(List<String> items) {
         this.items = items;
-        for (int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
             indexMapping.put(items.get(i), i);
         }
         selectExpressions = new Expression[items.size()];
@@ -80,50 +80,43 @@ public class CustomJoinExpressionParser extends ExpressionDeParser {
         parseBinaryExpression(minorThanEquals);
     }
 
-    protected void parseBinaryExpression(BinaryExpression expression){
+    protected void parseBinaryExpression(BinaryExpression expression) {
         Expression left = expression.getLeftExpression();
         Expression right = expression.getRightExpression();
-        if (left instanceof Column && right instanceof Column && !((Column) left).getTable().getName().equals(((Column) right).getTable().getName())){
-//            System.out.println(((Column) left).getTable().getName());
-//            System.out.println(((Column) right).getTable().getName());
-//            System.out.println(indexMapping);
+        if (left instanceof Column && right instanceof Column && !((Column) left).getTable().getName().equals(((Column) right).getTable().getName())) {
             int mergeIndex = max(indexMapping.get(((Column) left).getTable().getName()), indexMapping.get(((Column) right).getTable().getName()));
-            if (joinExpressions[mergeIndex] == null){
+            if (joinExpressions[mergeIndex] == null) {
                 joinExpressions[mergeIndex] = expression;
             } else {
                 joinExpressions[mergeIndex] = new AndExpression(joinExpressions[mergeIndex], expression);
             }
         } else {
-            if (left instanceof Column){
+            if (left instanceof Column) {
                 int mergeIndex = indexMapping.get(((Column) left).getTable().getName());
-                if (selectExpressions[mergeIndex] == null){
+                if (selectExpressions[mergeIndex] == null) {
                     selectExpressions[mergeIndex] = expression;
                 } else {
                     selectExpressions[mergeIndex] = new AndExpression(selectExpressions[mergeIndex], expression);
                 }
             } else if (right instanceof Column) {
                 int mergeIndex = indexMapping.get(((Column) right).getTable().getName());
-                if (selectExpressions[mergeIndex] == null){
+                if (selectExpressions[mergeIndex] == null) {
                     selectExpressions[mergeIndex] = expression;
                 } else {
                     selectExpressions[mergeIndex] = new AndExpression(selectExpressions[mergeIndex], expression);
                 }
-            }
-            else {
+            } else {
                 throw new ParseException("Parse error encountered during join parsing!");
             }
         }
     }
 
-    public Operator buildTree(){
+    public Operator buildTree() {
         Operator root = new ScanOperator(items.get(0));
-//        System.out.println(items);
-//        System.out.println(Arrays.toString(selectExpressions));
-//        System.out.println(Arrays.toString(joinExpressions));
-        if (selectExpressions[0] != null){
+        if (selectExpressions[0] != null) {
             root = new SelectOperator(root, selectExpressions[0]);
         }
-        for (int i = 1; i < items.size(); i++){
+        for (int i = 1; i < items.size(); i++) {
             Operator rightChild = new ScanOperator(items.get(i));
             if (selectExpressions[i] != null)
                 rightChild = new SelectOperator(rightChild, selectExpressions[i]);

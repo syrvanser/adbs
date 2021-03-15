@@ -1,0 +1,1 @@
+SELECT * FROM Sailors S1, Sailors S2, Sailors S3 WHERE S1.A < S2.A AND S1.A < S3.A AND S2.A > S3.A;

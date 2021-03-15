@@ -1,0 +1,1 @@
+SELECT R.G, S.A FROM Reserves as R, Boats as B, Sailors as S ORDER BY S.A, R.G
