@@ -4,6 +4,7 @@ import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.select.Select;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.PrintStream;
 
@@ -38,7 +39,9 @@ public class LightDB {
                 if (outputFilename.equals("System.out")) { // only used for debugging
                     printStream = new PrintStream(System.out);
                 } else {
-                    printStream = new PrintStream(outputFilename);
+                    File output = new File(outputFilename);
+                    output.getParentFile().mkdirs();
+                    printStream = new PrintStream(output);
                 }
                 QueryPlanExecutor.getInstance().executeStatement(select).dump(printStream);
                 DatabaseCatalog.getInstance().reset(); // we reset both the index and the executor at the end
