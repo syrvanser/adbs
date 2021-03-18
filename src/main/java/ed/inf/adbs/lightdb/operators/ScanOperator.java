@@ -15,6 +15,11 @@ public class ScanOperator extends Operator {
 
     private Scanner scan;
 
+    /**
+     * Class constructor
+     *
+     * @param tableName table to scan from
+     */
     public ScanOperator(String tableName) {
         super(tableName);
         File tableFile = databaseCatalog.getFile(tableName);
@@ -26,17 +31,25 @@ public class ScanOperator extends Operator {
         }
     }
 
+    /**
+     * Returns the next tuple
+     *
+     * @return next tuple (null if no tuples are left)
+     */
     @Override
     public Tuple getNextTuple() {
         if (scan.hasNext()) {
             String line = scan.nextLine();
-            List<Long> record = Arrays.stream(line.split(",")).map(Long::valueOf).collect(Collectors.toList()); // convert csv string to List<Long>
+            List<Long> record = Arrays.stream(line.split(",")).map(Long::valueOf).collect(Collectors.toList()); // converts csv string to List<Long>
             return new Tuple(record);
         } else {
             return null;
         }
     }
 
+    /**
+     * Method for resetting the operator
+     */
     @Override
     public void reset() {
         File tableFile = databaseCatalog.getFile(tableName);

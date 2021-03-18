@@ -1,0 +1,1 @@
+SELECT Boats.D, Reserves.H FROM  Reserves, Boats, Sailors WHERE 1 = 1

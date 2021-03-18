@@ -1,0 +1,15 @@
+ed\inf\adbs\lightdb\LightDB.class
+ed\inf\adbs\lightdb\TupleComparator.class
+ed\inf\adbs\lightdb\operators\Operator.class
+ed\inf\adbs\lightdb\operators\SortOperator.class
+ed\inf\adbs\lightdb\Tuple.class
+ed\inf\adbs\lightdb\DatabaseCatalog.class
+ed\inf\adbs\lightdb\CustomJoinExpressionParser.class
+ed\inf\adbs\lightdb\operators\JoinOperator.class
+ed\inf\adbs\lightdb\operators\SelectOperator.class
+ed\inf\adbs\lightdb\ParseException.class
+ed\inf\adbs\lightdb\operators\ProjectOperator.class
+ed\inf\adbs\lightdb\CustomExpressionParser.class
+ed\inf\adbs\lightdb\operators\DuplicateEliminationOperator.class
+ed\inf\adbs\lightdb\QueryPlanExecutor.class
+ed\inf\adbs\lightdb\operators\ScanOperator.class

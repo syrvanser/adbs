@@ -1,0 +1,15 @@
+C:\uni\adbs\LightDB\src\main\java\ed\inf\adbs\lightdb\ParseException.java
+C:\uni\adbs\LightDB\src\main\java\ed\inf\adbs\lightdb\QueryPlanExecutor.java
+C:\uni\adbs\LightDB\src\main\java\ed\inf\adbs\lightdb\operators\SelectOperator.java
+C:\uni\adbs\LightDB\src\main\java\ed\inf\adbs\lightdb\operators\DuplicateEliminationOperator.java
+C:\uni\adbs\LightDB\src\main\java\ed\inf\adbs\lightdb\LightDB.java
+C:\uni\adbs\LightDB\src\main\java\ed\inf\adbs\lightdb\TupleComparator.java
+C:\uni\adbs\LightDB\src\main\java\ed\inf\adbs\lightdb\DatabaseCatalog.java
+C:\uni\adbs\LightDB\src\main\java\ed\inf\adbs\lightdb\operators\JoinOperator.java
+C:\uni\adbs\LightDB\src\main\java\ed\inf\adbs\lightdb\operators\Operator.java
+C:\uni\adbs\LightDB\src\main\java\ed\inf\adbs\lightdb\CustomExpressionParser.java
+C:\uni\adbs\LightDB\src\main\java\ed\inf\adbs\lightdb\operators\ScanOperator.java
+C:\uni\adbs\LightDB\src\main\java\ed\inf\adbs\lightdb\CustomJoinExpressionParser.java
+C:\uni\adbs\LightDB\src\main\java\ed\inf\adbs\lightdb\operators\ProjectOperator.java
+C:\uni\adbs\LightDB\src\main\java\ed\inf\adbs\lightdb\Tuple.java
+C:\uni\adbs\LightDB\src\main\java\ed\inf\adbs\lightdb\operators\SortOperator.java

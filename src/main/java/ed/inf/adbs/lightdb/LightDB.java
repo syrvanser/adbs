@@ -12,41 +12,41 @@ import java.io.PrintStream;
  */
 public class LightDB {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		if (args.length != 3) {
-			System.err.println("Usage: LightDB database_dir input_file output_file");
-			return;
-		}
+        if (args.length != 3) {
+            System.err.println("Usage: LightDB database_dir input_file output_file");
+            return;
+        }
 
-		String databaseDir = args[0];
-		String inputFile = args[1];
-		String outputFile = args[2];
-		DatabaseCatalog.getInstance().loadSchema(databaseDir);
+        String databaseDir = args[0];
+        String inputFile = args[1];
+        String outputFile = args[2];
+        DatabaseCatalog.getInstance().loadSchema(databaseDir);
 
-		parse(inputFile, outputFile);
-	}
+        parse(inputFile, outputFile);
+    }
 
-	public static void parse(String inputFilename, String outputFilename) {
-		try {
-			Statement statement = CCJSqlParserUtil.parse(new FileReader(inputFilename));
-			if (statement != null) {
-				System.out.println("Read statement: " + statement);
-				Select select = (Select) statement;
+    public static void parse(String inputFilename, String outputFilename) {
+        try {
+            Statement statement = CCJSqlParserUtil.parse(new FileReader(inputFilename));
+            if (statement != null) {
+                System.out.println("Read statement: " + statement);
+                Select select = (Select) statement;
 
-				PrintStream printStream;
-				if (outputFilename.equals("System.out")){
-					printStream = new PrintStream(System.out);
-				} else {
-					printStream = new PrintStream(outputFilename);
-				}
-				QueryPlanExecutor.getInstance().executeStatement(select).dump(printStream);
-				DatabaseCatalog.getInstance().reset();
-				QueryPlanExecutor.getInstance().reset();
-			}
-		} catch (Exception e) {
-			System.err.println("Exception occurred during parsing");
-			e.printStackTrace();
-		}
-	}
+                PrintStream printStream;
+                if (outputFilename.equals("System.out")) { // only used for debugging
+                    printStream = new PrintStream(System.out);
+                } else {
+                    printStream = new PrintStream(outputFilename);
+                }
+                QueryPlanExecutor.getInstance().executeStatement(select).dump(printStream);
+                DatabaseCatalog.getInstance().reset(); // we reset both the index and the executor at the end
+                QueryPlanExecutor.getInstance().reset(); // this is done to make sure that junit doesn't reuse them between tests.
+            }
+        } catch (Exception e) {
+            System.err.println("Exception occurred during parsing");
+            e.printStackTrace();
+        }
+    }
 }
